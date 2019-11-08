@@ -1,0 +1,40 @@
+<p>home works!</p>
+<h3 class="title">School</h3>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <!--Subject Table-->
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <th scope="col">Subject Name</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let subject of subjects; let i=index">
+          <td>{{subject.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-primary" type="button" id="addSubject" data-toggle="modal" data-target="#newSubject">Add new Subject</button>
+    </div>
+
+    <div class="col">
+      <!--Student Table-->
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <th scope="col">Student Name</th>
+        <th scope="col">Address</th>
+        <th colspan="4">Phones</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let student of students; let i=index">
+          <td>{{student.name}}</td>
+          <td>{{student.address}}</td>
+          <td>{{student.phones[0].description}}</td>
+          <td>{{student.phones[0].number}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
