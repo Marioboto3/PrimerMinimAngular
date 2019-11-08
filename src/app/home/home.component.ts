@@ -6,6 +6,7 @@ import {SubjectService} from '../components/services/subject.service';
 import {Student} from '../models/student';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
+import {async} from '@angular/core/testing';
 
 
 @Component({
@@ -15,19 +16,6 @@ import {HttpErrorResponse} from '@angular/common/http';
   providers: [StudentService]
 })
 export class HomeComponent implements OnInit {
-
-  subjects: Subject[];
-  /**
-   * To see the enrolled students
-   */
-  singleSubject: Subject;
-  students: Student[];
-  studentsall: Student[];
-  idSelectedSubject: string;
-  body: object;
-  subjectName: string;
-  subjectForm: FormGroup;
-  validation_messages: any;
 
 
   constructor(private studentService: StudentService, private router: Router,
@@ -41,6 +29,33 @@ export class HomeComponent implements OnInit {
         Validators.pattern(/^[A-Z]{1,20}$/)]))
     });
   }
+
+  subjects: Subject[];
+  /**
+   * To see the enrolled students
+   */
+  subjectid = 'EA';
+  idTelecos = 'Telecos';
+  idTelematica = 'Telematica';
+  idAeros = 'Aeros';
+
+  singleSubject: Subject;
+  singleStudent: Student;
+  students: Student[];
+  studentsSingleSubject: Student[];
+  studentsall: Student[];
+  studentsTelecos: Student[];
+  studentsTelematica: Student [];
+  studentsAeros: Student [];
+  allSubjects: Subject[];
+  idSelectedSubject: string;
+  body: object;
+  subjectName: string;
+  subjectNameEnrol: string;
+  studentNameEnrol: string;
+  subjectForm: FormGroup;
+  idStudentEnroll: string;
+  validation_messages: any;
 
   ngOnInit() {
     this.getSubjects();
@@ -56,18 +71,13 @@ export class HomeComponent implements OnInit {
     };
   }
   subjectDetail(id: string) {
-    this.subjectService.getSubjectDetail(id)
-      .subscribe( res => {
-          console.log(res);
-          this.singleSubject = res as Subject;
-          this.students = this.singleSubject.students;
-        },
-        err => {
-          console.log(err);
-        });
-  }
+    if (id === 'EA') {
+      this.singleSubject = this.subjects[0];
+      this.studentsSingleSubject = this.singleSubject.students;
+    }
+      }
 
-  getSubjects() {
+getSubjects() {
     this.subjectService.getSubjects()
       .subscribe(res => {
         console.log(res);
@@ -75,24 +85,25 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  getStudents() {
+getStudents() {
     this.studentService.getStudents()
       .subscribe(res => {
         console.log(res);
         this.studentsall = res as Student[];
       });
   }
-  assignSubjectId(id: string) {
+
+assignSubjectId(id: string) {
     this.idSelectedSubject = id;
   }
-  updateStudent(id: string) {
+updateStudent(id: string) {
     this.router.navigate(['/updatestudent', id]);
   }
 
-  addNewStudent() {
+addNewStudent() {
     this.router.navigateByUrl('/addstudent');
   }
-  addNewSubject() {
+addNewSubject() {
     const subject = {
       name: this.subjectName
     };
@@ -107,17 +118,9 @@ export class HomeComponent implements OnInit {
           this.handleError(err);
         });
   }
-  addStudentSubject(id: string) {
+addStudentSubject(id: string) {
     // Only call the service if a Subject is selected
-        this.subjectService.postStudentSubject(this.body)
-        .subscribe( res => {
-            console.log(res);
-            confirm('Added successfully');
-          },
-          err => {
-            console.log(err);
-          });
-    }
+  }
   private handleError(err: HttpErrorResponse) {
     if ( err.status === 500 ) {
       this.subjectForm.get('name').setErrors({error: true});

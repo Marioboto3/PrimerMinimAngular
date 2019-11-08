@@ -7,10 +7,14 @@ export class Student {
     description: string;
     number: string;
   }];
-  constructor(id = '', name = '', address = '', phones = null) {
+  studies: [{
+    studies: string;
+  }]
+  constructor(id = '', name = '', address = '', phones = null, studies = null) {
     this.id = id;
     this.name = name;
     this.address = address;
     this.phones = phones;
+    this.studies = studies;
   }
 }
