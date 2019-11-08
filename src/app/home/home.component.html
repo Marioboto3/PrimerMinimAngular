@@ -12,6 +12,7 @@
         <tbody>
         <tr *ngFor="let subject of subjects; let i=index">
           <td>{{subject.name}}</td>
+          <td> <button class="btn btn-primary" type="button" (click)="subjectDetail(subject.id)" id="viewDetail" data-toggle="modal" data-target="#vieWdetail">View detail</button></td>
         </tr>
         </tbody>
       </table>
@@ -35,10 +36,43 @@
         </tr>
         </tbody>
       </table>
+      <button class="btn btn-primary" type="button" id="addStudentsSubject" data-toggle="modal" data-target="#newSubject">Add Student to Subject</button>
     </div>
   </div>
 </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <!--Subject Table-->
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+¡    </div>
+  </div>
+</div>
+<div class="container">
+<div class="col">
+  <!--Student Table-->
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+    <th scope="col">Student Name</th>
+    <th scope="col">Address</th>
+    <th colspan="4">Phones</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of studentsall; let i=index">
+      <td>{{student.name}}</td>
+      <td>{{student.address}}</td>
+      <td>{{student.phones[0].description}}</td>
+      <td>{{student.phones[0].number}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
 <!-- Modal Add Subject-->
 <div class="modal fade" id="newSubject" tabindex="-1" role="dialog" aria-labelledby="subjectLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

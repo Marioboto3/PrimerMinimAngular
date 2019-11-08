@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
    */
   singleSubject: Subject;
   students: Student[];
+  studentsall: Student[];
   idSelectedSubject: string;
   body: object;
   subjectName: string;
@@ -54,7 +55,17 @@ export class HomeComponent implements OnInit {
       ]
     };
   }
-
+  subjectDetail(id: string) {
+    this.subjectService.getSubjectDetail(id)
+      .subscribe( res => {
+          console.log(res);
+          this.singleSubject = res as Subject;
+          this.students = this.singleSubject.students;
+        },
+        err => {
+          console.log(err);
+        });
+  }
 
   getSubjects() {
     this.subjectService.getSubjects()
@@ -68,7 +79,7 @@ export class HomeComponent implements OnInit {
     this.studentService.getStudents()
       .subscribe(res => {
         console.log(res);
-        this.students = res as Student[];
+        this.studentsall = res as Student[];
       });
   }
   assignSubjectId(id: string) {
@@ -81,7 +92,32 @@ export class HomeComponent implements OnInit {
   addNewStudent() {
     this.router.navigateByUrl('/addstudent');
   }
-
+  addNewSubject() {
+    const subject = {
+      name: this.subjectName
+    };
+    console.log(this.subjectName);
+    this.subjectService.postSubject(subject)
+      .subscribe( res => {
+          console.log(res);
+          this.getSubjects();
+        },
+        err => {
+          console.log(err);
+          this.handleError(err);
+        });
+  }
+  addStudentSubject(id: string) {
+    // Only call the service if a Subject is selected
+        this.subjectService.postStudentSubject(this.body)
+        .subscribe( res => {
+            console.log(res);
+            confirm('Added successfully');
+          },
+          err => {
+            console.log(err);
+          });
+    }
   private handleError(err: HttpErrorResponse) {
     if ( err.status === 500 ) {
       this.subjectForm.get('name').setErrors({error: true});

@@ -18,4 +18,15 @@ export class SubjectService {
   getSubjects(): Observable<Subject[]> {
     return this.http.get<Subject[]>(this.url.url + '/subject/get');
   }
+
+  postSubject(name: object) {
+    return this.http.post(this.url.url + '/subject/add', name);
+  }
+
+  getSubjectDetail(id: string) {
+    return this.http.get(this.url.url + `/subject/get/:${id}`);
+  }
+  postStudentSubject(ids: object) {
+    return this.http.post(this.url.url + '/addNew', ids);
+  }
 }
